@@ -14,7 +14,7 @@ function qa_page_db_fail_handler($type, $errno=null, $error=null, $query=null)
         $pass_failure_error=$error;
         $pass_failure_query=$query;
         
-        require_once CSE_DIR.'/qa-install-'.CSE_DIR.'.php';
+        require_once CSE_DIR.'/qa-install-'.CSE_LANG.'.php';
         
         qa_exit('error');
     } else {
@@ -24,5 +24,5 @@ function qa_page_db_fail_handler($type, $errno=null, $error=null, $query=null)
 
 function exists_install_lang_file()
 {
-    return file_exists(CSE_DIR.'/qa-install-'.CSE_DIR.'.php');
+    return file_exists(CSE_DIR.'/qa-install-'.CSE_LANG.'.php');
 }
