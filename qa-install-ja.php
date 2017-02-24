@@ -72,24 +72,6 @@ if (!isset($pass_failure_type) && qa_clicked('super')) {
 
 //    Output start of HTML early, so we can see a nicely-formatted list of database queries when upgrading
 
-?><!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <style>
-            body, input { font: 16px Verdana, Arial, Helvetica, sans-serif; }
-            body { text-align: center; width: 640px; margin: 64px auto; }
-            table { margin: 16px auto; }
-            th, td { padding: 2px; }
-            th { text-align: right; font-weight: normal; }
-            td { text-align: left; }
-            .msg-success { color: #090; }
-            .msg-error { color: #b00; }
-        </style>
-    </head>
-    <body>
-<?php
-
 
 if (isset($pass_failure_type)) {
     // this page was requested due to query failure, via the fail handler
@@ -279,51 +261,6 @@ if (empty($errorhtml)) {
     $suggest = '<a href="'.qa_path_html('admin', null, null, QA_URL_FORMAT_SAFEST).'">管理センターへ</a>';
 }
 
-?>
-
-        <form method="post" action="<?php echo qa_path_html('install', null, null, QA_URL_FORMAT_SAFEST)?>">
-
-<?php
-
-if (strlen($success))
-    echo '<p class="msg-success">'.nl2br(qa_html($success)).'</p>';
-
-if (strlen($errorhtml))
-    echo '<p class="msg-error">'.nl2br($errorhtml).'</p>';
-
-if (strlen($suggest))
-    echo '<p>'.$suggest.'</p>';
-
-
-//    Very simple general form display logic (we don't use theme since it depends on tons of DB options)
-
-if (count($fields)) {
-    echo '<table>';
-
-    foreach ($fields as $name => $field) {
-        echo '<tr>';
-        echo '<th>'.qa_html($field['label']).'</th>';
-        echo '<td><input type="'.qa_html($field['type']).'" size="24" name="'.qa_html($name).'" value="'.qa_html(@${'in'.$name}).'"></td>';
-        if (isset($fielderrors[$name]))
-            echo '<td class="msg-error"><small>'.qa_html($fielderrors[$name]).'</small></td>';
-        else
-            echo '<td></td>';
-        echo '</tr>';
-    }
-
-    echo '</table>';
-}
-
-foreach ($buttons as $name => $value)
-    echo '<input type="submit" name="'.qa_html($name).'" value="'.qa_html($value).'">';
-
-foreach ($hidden as $name => $value)
-    echo '<input type="hidden" name="'.qa_html($name).'" value="'.qa_html($value).'">';
+include_once(CSE_DIR.'/html/messages-ja.html');
 
 qa_db_disconnect();
-
-?>
-
-        </form>
-    </body>
-</html>
